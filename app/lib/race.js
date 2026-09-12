@@ -1,17 +1,13 @@
 // ============================================================
-//  PROVABLY FAIR DUNGEON CRAWL RACE
+//  DUNGEON CRAWL RACE
 //
-//  Commit / reveal, the way a casino does it:
-//    1. A random server seed is generated and its SHA-256 hash is shown.
-//       You publish that hash BEFORE entries close.
-//    2. Entrants are locked in.
-//    3. The race is simulated from  SHA-256(seed + "|" + entrants)  -- a pure
-//       function, no randomness at run time.
-//    4. The seed is revealed. Anyone can hash it to check it matches what you
-//       published, re-run this algorithm, and land on the same winner.
+//  Finish order comes from SHA-256(seed + "|" + entrants) fed into a PRNG, so
+//  the same inputs always give the same result. A fresh random seed is drawn
+//  for every race and is never surfaced in the UI.
 //
-//  Because the entrant list is folded into the hash, neither the seed nor the
-//  list can be swapped after the commit without breaking verification.
+//  That determinism is what lets the whole race be computed up front: the
+//  frames are generated once and then played back, and any past result can be
+//  reproduced exactly from its seed and entrant list if it is ever disputed.
 // ============================================================
 
 export const DISTANCE = 1000;     // track length in arbitrary units
@@ -49,21 +45,6 @@ function makeRng(hex) {
     d = ((d << 11) | (d >>> 21)) >>> 0;
     return r / 4294967296;
   };
-}
-
-/** One entrant per line; blanks and duplicates removed, order preserved. */
-export function parseEntrants(text) {
-  const seen = new Set();
-  const out = [];
-  for (const raw of String(text).split(/[\n,]/)) {
-    const name = raw.trim().replace(/\s+/g, " ");
-    if (!name) continue;
-    const key = name.toLowerCase();
-    if (seen.has(key)) continue;
-    seen.add(key);
-    out.push(name);
-  }
-  return out;
 }
 
 /**

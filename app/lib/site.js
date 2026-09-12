@@ -11,8 +11,6 @@ export const site = {
     main: "DOUGS",
     sub: "REWARDS",
   },
-  heroSub:
-    "Wager under the code, climb the board, get paid. A $500 monthly race, exclusive sign-up bonuses, and every stream in one place.",
 };
 
 // ---- Sponsor -------------------------------------------------
@@ -68,7 +66,6 @@ export const socials = [
 
 // platforms shown as the hero watch-live buttons, in order
 export const liveOn = socials.filter((s) => s.live);
-export const liveUrl = liveOn[0].url;
 
 // ---- Kick chat entry collection ------------------------------
 // The channel never changes, so it is set here rather than on the page.
