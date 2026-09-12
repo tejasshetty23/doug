@@ -17,7 +17,7 @@ import bg4 from "@/public/bg4.png";
 
 export const metadata = {
   title: "Leaderboard",
-  description: "The $500 monthly Stake.com wager race. Top 10 paid every month under code ratmode.",
+  description: "The $500 monthly Stake.com wager race. Top 5 paid every month under code ratmode.",
 };
 
 export default async function Leaderboard() {

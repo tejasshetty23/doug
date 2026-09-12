@@ -1,6 +1,6 @@
 // ============================================================
 //  LEADERBOARD DATA
-//  Prize pool: $500, paid down to 10th place.
+//  Prize pool: $500, paid down to 5th place.
 //
 //  Live standings come from Doug's affiliate Google Sheet, published as CSV
 //  (File -> Share -> Publish to web -> that tab -> CSV). Put the link in
@@ -10,7 +10,7 @@
 // ============================================================
 
 export const PRIZE_POOL = 500;
-export const PRIZES = [150, 100, 75, 50, 40, 30, 20, 15, 12, 8]; // === $500
+export const PRIZES = [150, 125, 100, 75, 50]; // === $500
 
 // how often the sheet is re-read, in seconds
 const REFRESH_SECONDS = 300;

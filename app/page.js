@@ -141,7 +141,7 @@ export default async function Home() {
           <div className="shead">
             <span className="eyebrow">{raceLabel()} race</span>
             <h2 className="display gtext">{fmtMoney(PRIZE_POOL)} monthly leaderboard</h2>
-            <p>Top 10 get paid every month. Here is who is running the board right now.</p>
+            <p>Top 5 get paid every month. Here is who is running the board right now.</p>
           </div>
 
           <Podium rows={rows} bounce />

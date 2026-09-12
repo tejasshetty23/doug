@@ -79,11 +79,11 @@ How it behaves:
   loudly instead of shipping wrong numbers.
 - With no URL set, it falls back to placeholder rows.
 
-Prize pool is `$500`, split down to 10th place:
+Prize pool is `$500`, split down to 5th place:
 
-| 1st | 2nd | 3rd | 4th | 5th | 6th | 7th | 8th | 9th | 10th |
-|---|---|---|---|---|---|---|---|---|---|
-| $150 | $100 | $75 | $50 | $40 | $30 | $20 | $15 | $12 | $8 |
+| 1st | 2nd | 3rd | 4th | 5th |
+|---|---|---|---|---|
+| $150 | $125 | $100 | $75 | $50 |
 
 **Race dates** live in `RACE` in [`app/lib/leaderboard.js`](app/lib/leaderboard.js),
 currently Sep 6 → Oct 8 2026, taken from the sheet's tab name. The countdown
