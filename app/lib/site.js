@@ -2,6 +2,8 @@
 //  EDIT EVERYTHING HERE. Nothing else needs touching.
 // ============================================================
 
+import { raceEndLabel } from "./leaderboard";
+
 export const site = {
   name: "dougthegiant",
   // two-tier hero stack: huge brand word / medium second line
@@ -22,7 +24,8 @@ export const sponsor = {
   code: "ratmode",
   sites: "Stake.us & Stake.com",
   lbSite: "Stake.com",
-  url: "https://stake.us/?offer=ratmode&c=Z6hGNufM",
+  url: "https://stake.us/?offer=ratmode&c=Z6hGNufM",   // Stake.us
+  comUrl: "https://stake.com/?c=6G8H0fdY",               // Stake.com (leaderboard counts these)
 };
 
 export const bonuses = [
@@ -41,10 +44,10 @@ export const bonuses = [
     badge: "WAGER RACE",
     headline: "$500 Monthly Race",
     blurb: "Every Stake.com wager under code ratmode counts automatically. Top 10 get paid every month.",
-    perks: ["Auto-tracked, no sign-up form", "Paid out on the 1st", "Prizes down to 10th place"],
+    perks: ["Auto-tracked, no sign-up form", `Race ends ${raceEndLabel()}`, "Prizes down to 10th place"],
     code: "ratmode",
-    url: "https://stake.us/?offer=ratmode&c=Z6hGNufM",
-    cta: "Enter the race",
+    url: "https://stake.com/?c=6G8H0fdY",
+    cta: "Claim on Stake.com",
   },
 ];
 

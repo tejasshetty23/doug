@@ -38,27 +38,49 @@ block, nothing else.
 ## Editing content
 
 Almost everything you'll want to change lives in
-**[`app/lib/site.js`](app/lib/site.js)**: sponsor, code, socials, nav, and the
-Kick chat settings.
+**[`app/lib/site.js`](app/lib/site.js)**: sponsor links and code, socials, nav,
+and the Kick chat settings.
 
 ### Still to fill in
 
+- `LEADERBOARD_CSV_URL` — **required** for real standings. See
+  [Leaderboard](#leaderboard) below; until it's set the board shows placeholder
+  rows.
 - `kick.chatroomId` — **required** for the giveaway chat integration. Kick's
   channel lookup is behind Cloudflare and sends no CORS headers, so neither the
   browser nor a script can resolve it. Open
   `https://kick.com/api/v2/channels/dougthegiant` in a normal browser tab, find
   `"chatroom":{"id":…}` and paste that number in. One time only.
 - `socials[0].url` — the Kick URL is still a guess (`kick.com/dougthegiant`).
-- A Stake.com referral link. Every Stake link currently points at the Stake.us
-  one, while the copy says the leaderboard tracks Stake.com wagers.
 
 ## Leaderboard
 
-Standings live in [`app/lib/leaderboard.js`](app/lib/leaderboard.js). It returns a
-hardcoded `PLACEHOLDER` array today. To go live, put your API key in `.env.local`
-and replace that one line with a `fetch` — the doc comment above
-`getLeaderboard()` has the snippet. Ranking, prize assignment and every component
-downstream keep working unchanged.
+Standings come from Doug's affiliate Google Sheet ("Affiliate Wager Race
+Exclusive"), read as CSV by [`app/lib/leaderboard.js`](app/lib/leaderboard.js).
+
+The leaderboard tab is **published to web as CSV** (*File → Share → Publish to
+web* → that tab → **CSV**). That lets the server read it without logging in,
+while the sheet itself stays private. Put the published link in
+`LEADERBOARD_CSV_URL`:
+
+- locally: `.env.local` (gitignored)
+- live: Vercel → Project → Settings → Environment Variables, then redeploy
+
+Keep it server-only — never prefix it with `NEXT_PUBLIC_`.
+
+How it behaves:
+
+- Columns are matched by header name, ignoring case, spaces and underscores
+  (`User Name`, `user_name` and `USERNAME` all work), so column order doesn't
+  matter. `$1,234.56`-style amounts are parsed and blank rows skipped.
+- The sheet is re-read at most every 5 minutes. The home podium and the
+  leaderboard page both update from it.
+- Names are masked on the server (`iamverybadgirl` → `ia***rl`), so full
+  usernames never reach the browser.
+- If the sheet can't be read, the fetch throws on purpose: Next keeps serving the
+  last good page instead of an empty or fake board, and a fresh deploy fails
+  loudly instead of shipping wrong numbers.
+- With no URL set, it falls back to placeholder rows.
 
 Prize pool is `$500`, split down to 10th place:
 
@@ -66,7 +88,14 @@ Prize pool is `$500`, split down to 10th place:
 |---|---|---|---|---|---|---|---|---|---|
 | $150 | $100 | $75 | $50 | $40 | $30 | $20 | $15 | $12 | $8 |
 
-The race resets at 00:00 UTC on the 1st; the hero countdown reads `raceEndsAt()`.
+**Race dates** live in `RACE` in [`app/lib/leaderboard.js`](app/lib/leaderboard.js),
+currently Sep 6 → Oct 8 2026, taken from the sheet's tab name. The countdown
+targets `RACE.end` (00:00 UTC). Each race gets its own tab, and a published link
+points at one tab only, so when a new race starts:
+
+1. Publish the new tab (*File → Share → Publish to web* → that tab → **CSV**)
+2. Swap `LEADERBOARD_CSV_URL` in `.env.local` and in Vercel, then redeploy
+3. Update the two dates in `RACE`
 
 ## Giveaways
 

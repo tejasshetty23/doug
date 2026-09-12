@@ -10,7 +10,8 @@ export default function Footer() {
             <div className="foot-brand">{site.name}</div>
             <p>
               Leaderboards, bonuses and every stream in one place. Sign up under code{" "}
-              <strong>{sponsor.code}</strong> on {sponsor.name} to enter the monthly race.
+              <strong>{sponsor.code}</strong> on {sponsor.name} to enter the monthly race, or just
+              chill with the gaming streams when there&apos;s no gambling going on.
             </p>
           </div>
 
@@ -47,14 +48,14 @@ export default function Footer() {
         <div className="foot-bot">
           <span className="age">18+</span>
           <p>
-            Gamble responsibly. This site is an affiliate of {sponsor.name} and may earn a
-            commission on sign-ups made through its links. Nothing here is financial advice, and
-            prizes are funded and paid at the streamer&apos;s discretion. If gambling stops being
-            fun, get support at{" "}
+            Gamble responsibly. Heads up: we&apos;re a {sponsor.name} affiliate, so we get a cut
+            when you sign up through our links. None of this is financial advice, and prizes come
+            out of our pocket and get paid out at our call. If it stops being fun, take a break
+            and reach out to{" "}
             <a href="https://www.gamblingtherapy.org/" target="_blank" rel="noopener noreferrer">
               GamblingTherapy.org
             </a>
-            . &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
+            . &copy; {new Date().getFullYear()} {site.name}.
           </p>
         </div>
       </div>

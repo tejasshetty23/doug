@@ -11,6 +11,7 @@ import {
   fmtMoney,
   raceEndsAt,
   raceLabel,
+  raceEndLabel,
 } from "../lib/leaderboard";
 import bg4 from "@/public/bg4.png";
 
@@ -52,7 +53,7 @@ export default async function Leaderboard() {
           <div className="hero-actions">
             <a
               className="btn btn-primary"
-              href={sponsor.url}
+              href={sponsor.comUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -149,8 +150,8 @@ export default async function Leaderboard() {
                 d: `Your ${sponsor.lbSite} account has to be signed up under code ${sponsor.code} for wagers to track. The code also works on Stake.us, but only ${sponsor.lbSite} play counts toward the board.`,
               },
               {
-                t: "Monthly reset",
-                d: "The board wipes at 00:00 UTC on the 1st. Everyone starts the new month from zero.",
+                t: `Race ends ${raceEndLabel()}`,
+                d: `The board closes at 00:00 UTC on ${raceEndLabel()}. The next race starts fresh, with everyone back at zero.`,
               },
               {
                 t: "Paid through Discord",
@@ -179,7 +180,7 @@ export default async function Leaderboard() {
             <div className="hero-actions">
               <a
                 className="btn btn-primary"
-                href={sponsor.url}
+                href={sponsor.comUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
