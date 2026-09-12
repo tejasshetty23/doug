@@ -41,17 +41,14 @@ Almost everything you'll want to change lives in
 **[`app/lib/site.js`](app/lib/site.js)**: sponsor links and code, socials, nav,
 and the Kick chat settings.
 
-### Still to fill in
+### Configuration status
 
-- `LEADERBOARD_CSV_URL` — **required** for real standings. See
-  [Leaderboard](#leaderboard) below; until it's set the board shows placeholder
-  rows.
-- `kick.chatroomId` — **required** for the giveaway chat integration. Kick's
-  channel lookup is behind Cloudflare and sends no CORS headers, so neither the
-  browser nor a script can resolve it. Open
-  `https://kick.com/api/v2/channels/dougthegiant` in a normal browser tab, find
-  `"chatroom":{"id":…}` and paste that number in. One time only.
-- `socials[0].url` — the Kick URL is still a guess (`kick.com/dougthegiant`).
+- `LEADERBOARD_CSV_URL` — set locally in `.env.local` and in Vercel
+  (Production). See [Leaderboard](#leaderboard) below.
+- `kick.chatroomId` — `129696`, read from
+  `kick.com/api/v2/channels/dougthegiant`. Kick's lookup sits behind
+  Cloudflare and sends no CORS headers, so if the channel ever changes, that
+  URL has to be opened in a normal browser tab to get the new id.
 
 ## Leaderboard
 

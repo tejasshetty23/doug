@@ -80,7 +80,7 @@ export const liveUrl = liveOn[0].url;
 // number below. It only has to be done once.
 export const kick = {
   slug: "dougthegiant",
-  chatroomId: "",          // <-- paste the numeric chatroom id here
+  chatroomId: "129696",    // from kick.com/api/v2/channels/dougthegiant
   keyword: "!enter",
   maxEntrants: 15,
 };
