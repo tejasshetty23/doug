@@ -79,21 +79,29 @@ async function fetchSheetRows(url) {
   if (!res.ok) throw new Error(`Leaderboard sheet returned HTTP ${res.status}`);
 
   const [header = [], ...body] = parseCsv(await res.text());
-  // "User Name", "user_name" and "USERNAME" all count - only the letters matter
+  // Compare on letters only, so "User Name", "user_name" and "USERNAME" all
+  // match, and by substring, so Stake's "total_wagered_amount (USD)" does too.
   const norm = (h) => String(h).toLowerCase().replace(/[^a-z]/g, "");
-  const col = (...names) => header.findIndex((h) => names.includes(norm(h)));
+  const col = (...needles) => header.findIndex((h) => needles.some((n) => norm(h).includes(n)));
   const iUser = col("username", "user");
+  // note "wagered" never matches "total_weighted_amount" - different word
   const iWager = col("wagered", "wager");
   // a private sheet answers with a login page, which has none of these columns
   if (iUser < 0 || iWager < 0) {
     throw new Error(
-      `Leaderboard sheet has no "User Name"/"Wagered" columns - is it published as CSV? Got: ${header.join(", ").slice(0, 120)}`
+      `Leaderboard sheet has no user/wagered columns - is it published as CSV? Got: ${header.join(", ").slice(0, 120)}`
     );
   }
 
-  return body
-    .filter((r) => r[iUser]?.trim())
-    .map((r) => ({ username: maskName(r[iUser]), wagered: toNumber(r[iWager]) }));
+  return (
+    body
+      .filter((r) => r[iUser]?.trim())
+      .map((r) => ({ username: maskName(r[iUser]), wagered: toNumber(r[iWager]) }))
+      // Stake's export lists every referred account, and most have wagered
+      // nothing. Leaving them in would hand 4th and 5th place real money, picked
+      // arbitrarily out of dozens of rows tied on $0.
+      .filter((r) => r.wagered > 0)
+  );
 }
 
 /**

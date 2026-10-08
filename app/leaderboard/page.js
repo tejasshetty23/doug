@@ -107,24 +107,28 @@ export default async function Leaderboard() {
       {/* ================= FULL TABLE ================= */}
       <section className="section section-alt">
         <div className="wrap">
-          <Reveal className="card board">
-            <div className="trow thead">
-              <span>Rank</span>
-              <span>Player</span>
-              <span className="t-hide">Wagered</span>
-              <span className="t-head-r">Prize</span>
-            </div>
-            <div className="tbody">
-              {rest.map((r) => (
-                <div className="trow" key={r.rank}>
-                  <span className="rank">{r.rank}</span>
-                  <span className="t-user">{r.username}</span>
-                  <span className="t-wager t-hide">{fmtMoney(r.wagered)}</span>
-                  <span className="t-prize gtext">{fmtMoney(r.prize)}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
+          {/* with three or fewer players the podium is the whole board, and an
+              empty table would just render a stray header row */}
+          {rest.length > 0 && (
+            <Reveal className="card board">
+              <div className="trow thead">
+                <span>Rank</span>
+                <span>Player</span>
+                <span className="t-hide">Wagered</span>
+                <span className="t-head-r">Prize</span>
+              </div>
+              <div className="tbody">
+                {rest.map((r) => (
+                  <div className="trow" key={r.rank}>
+                    <span className="rank">{r.rank}</span>
+                    <span className="t-user">{r.username}</span>
+                    <span className="t-wager t-hide">{fmtMoney(r.wagered)}</span>
+                    <span className="t-prize gtext">{fmtMoney(r.prize)}</span>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          )}
 
           <Reveal className="shead" delay={140} style={{ marginTop: 34 }}>
             <p style={{ fontSize: 14 }}>
