@@ -127,12 +127,15 @@ export async function getLeaderboard() {
 }
 
 // ---- Race window -------------------------------------------
-// Taken from the sheet's tab name ("2026-09-06 to 2026-10-08"). Each race gets
-// its own tab, so when a new one starts: update these two dates AND point
-// LEADERBOARD_CSV_URL at the new tab's published link.
+// Keep these in step with the sheet's tab name ("2026-10-08 to 2026-11-08").
+// Each race gets its own tab, so when a new one starts: update both dates AND
+// point LEADERBOARD_CSV_URL at the new tab's published link.
+//
+// The countdown, the race label, the rules card and the bonus perk all read
+// from here, so these two lines are the only place a race window is set.
 export const RACE = {
-  start: "2026-09-06T00:00:00Z",
-  end: "2026-10-08T00:00:00Z",
+  start: "2026-10-08T00:00:00Z",
+  end: "2026-11-08T00:00:00Z",
 };
 
 export function raceEndsAt() {
@@ -142,10 +145,10 @@ export function raceEndsAt() {
 const day = (d) =>
   new Date(d).toLocaleString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 
-/** "Sep 6 – Oct 8" */
+/** "Oct 8 – Nov 8" */
 export const raceLabel = () => `${day(RACE.start)} – ${day(RACE.end)}`;
 
-/** "Oct 8" */
+/** "Nov 8" */
 export const raceEndLabel = () => day(RACE.end);
 
 // whole dollars stay clean ("$150"); real wagers keep their cents ("$548.38")

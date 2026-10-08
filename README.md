@@ -86,9 +86,9 @@ Prize pool is `$500`, split down to 5th place:
 | $150 | $125 | $100 | $75 | $50 |
 
 **Race dates** live in `RACE` in [`app/lib/leaderboard.js`](app/lib/leaderboard.js),
-currently Sep 6 → Oct 8 2026, taken from the sheet's tab name. The countdown
-targets `RACE.end` (00:00 UTC). Each race gets its own tab, and a published link
-points at one tab only, so when a new race starts:
+currently Oct 8 → Nov 8 2026, and should match the sheet's tab name. The
+countdown targets `RACE.end` (00:00 UTC). Each race gets its own tab, and a
+published link points at one tab only, so when a new race starts:
 
 1. Publish the new tab (*File → Share → Publish to web* → that tab → **CSV**)
 2. Swap `LEADERBOARD_CSV_URL` in `.env.local` and in Vercel, then redeploy
