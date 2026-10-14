@@ -2,12 +2,15 @@
 //  LEADERBOARD DATA
 //  Prize pool: $500, paid down to 5th place.
 //
-//  Live standings come from Doug's affiliate Google Sheet, published as CSV
-//  (File -> Share -> Publish to web -> that tab -> CSV). Put the link in
-//  LEADERBOARD_CSV_URL in .env.local and in Vercel's environment variables.
-//  Keep it server-only: never prefix it with NEXT_PUBLIC_.
-//  With no link set, the site falls back to the placeholder rows below.
+//  Standings come from, in order:
+//   1. the Stake export pasted into ./standings.js, if it has rows
+//   2. Doug's affiliate Google Sheet, published as CSV (File -> Share ->
+//      Publish to web -> that tab -> CSV), via LEADERBOARD_CSV_URL in
+//      .env.local and Vercel. Keep it server-only: never NEXT_PUBLIC_.
+//   3. the placeholder rows below
 // ============================================================
+
+import pastedExport from "./standings";
 
 export const PRIZE_POOL = 500;
 export const PRIZES = [150, 125, 100, 75, 50]; // === $500
@@ -74,11 +77,9 @@ function maskName(name) {
   return n.length <= 4 ? n.slice(0, 1) + "***" : n.slice(0, 2) + "***" + n.slice(-2);
 }
 
-async function fetchSheetRows(url) {
-  const res = await fetch(url, { next: { revalidate: REFRESH_SECONDS } });
-  if (!res.ok) throw new Error(`Leaderboard sheet returned HTTP ${res.status}`);
-
-  const [header = [], ...body] = parseCsv(await res.text());
+/** Stake export or published-sheet CSV -> [{ username, wagered }] */
+function rowsFromCsv(text, source) {
+  const [header = [], ...body] = parseCsv(text);
   // Compare on letters only, so "User Name", "user_name" and "USERNAME" all
   // match, and by substring, so Stake's "total_wagered_amount (USD)" does too.
   const norm = (h) => String(h).toLowerCase().replace(/[^a-z]/g, "");
@@ -89,7 +90,7 @@ async function fetchSheetRows(url) {
   // a private sheet answers with a login page, which has none of these columns
   if (iUser < 0 || iWager < 0) {
     throw new Error(
-      `Leaderboard sheet has no user/wagered columns - is it published as CSV? Got: ${header.join(", ").slice(0, 120)}`
+      `${source} has no user/wagered columns - is it published as CSV? Got: ${header.join(", ").slice(0, 120)}`
     );
   }
 
@@ -104,6 +105,12 @@ async function fetchSheetRows(url) {
   );
 }
 
+async function fetchSheetRows(url) {
+  const res = await fetch(url, { next: { revalidate: REFRESH_SECONDS } });
+  if (!res.ok) throw new Error(`Leaderboard sheet returned HTTP ${res.status}`);
+  return rowsFromCsv(await res.text(), "Leaderboard sheet");
+}
+
 /**
  * Returns the current standings, ranked and prize-assigned.
  *
@@ -114,7 +121,11 @@ async function fetchSheetRows(url) {
  */
 export async function getLeaderboard() {
   const url = process.env.LEADERBOARD_CSV_URL;
-  const rows = url ? await fetchSheetRows(url) : PLACEHOLDER;
+  const rows = pastedExport.trim()
+    ? rowsFromCsv(pastedExport, "standings.js")
+    : url
+      ? await fetchSheetRows(url)
+      : PLACEHOLDER;
 
   return rows
     .slice()

@@ -52,6 +52,10 @@ and the Kick chat settings.
 
 ## Leaderboard
 
+**Quickest update:** paste Stake's leaderboard export, header row and all, into
+[`app/lib/standings.js`](app/lib/standings.js), then commit and push. While that
+file has rows it wins over the sheet; empty it to switch back.
+
 Standings come from Doug's affiliate Google Sheet ("Affiliate Wager Race
 Exclusive"), read as CSV by [`app/lib/leaderboard.js`](app/lib/leaderboard.js).
 
