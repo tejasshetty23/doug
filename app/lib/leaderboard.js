@@ -13,7 +13,7 @@
 import pastedExport from "./standings";
 
 export const PRIZE_POOL = 500;
-export const PRIZES = [150, 125, 100, 75, 50]; // === $500
+export const PRIZES = [250, 120, 70, 40, 20]; // === $500
 
 // how often the sheet is re-read, in seconds
 const REFRESH_SECONDS = 300;
@@ -162,7 +162,7 @@ export const raceLabel = () => `${day(RACE.start)} – ${day(RACE.end)}`;
 /** "Nov 8" */
 export const raceEndLabel = () => day(RACE.end);
 
-// whole dollars stay clean ("$150"); real wagers keep their cents ("$548.38")
+// whole dollars stay clean ("$250"); real wagers keep their cents ("$548.38")
 export const fmtMoney = (n) =>
   "$" +
   n.toLocaleString(

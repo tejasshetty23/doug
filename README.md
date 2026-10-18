@@ -87,7 +87,7 @@ Prize pool is `$500`, split down to 5th place:
 
 | 1st | 2nd | 3rd | 4th | 5th |
 |---|---|---|---|---|
-| $150 | $125 | $100 | $75 | $50 |
+| $250 | $120 | $70 | $40 | $20 |
 
 **Race dates** live in `RACE` in [`app/lib/leaderboard.js`](app/lib/leaderboard.js),
 currently Oct 8 → Nov 8 2026, and should match the sheet's tab name. The
