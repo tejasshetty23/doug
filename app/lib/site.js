@@ -56,11 +56,11 @@ export const socials = [
     blurb: "Main stream. Slots, bonus buys and every big win happens here first." },
   { name: "Twitch",    handle: "@doug",         url: "https://www.twitch.tv/doug",         cta: "Watch Live", accent: "#9146ff", live: true,
     blurb: "Second stream and reruns. Follow so you never miss a session going live." },
-  { name: "X",         handle: "@dougthegiant", url: "https://x.com/dougthegiant",         cta: "Follow",     accent: "#ffffff",
+  { name: "X",         handle: "@ratmodedoug",  url: "https://x.com/ratmodedoug?s=11",      cta: "Follow",     accent: "#ffffff",
     blurb: "Go-live alerts, clips and giveaway announcements." },
   { name: "Discord",   handle: "discord.gg/Bawzgby86", url: "https://discord.gg/Bawzgby86", cta: "Join",       accent: "#5865f2",
     blurb: "The community. Leaderboard payouts get announced and claimed in here." },
-  { name: "Instagram", handle: "@dougthegiant", url: "https://instagram.com/dougthegiant", cta: "Follow",     accent: "#e1306c",
+  { name: "Instagram", handle: "@ratmodedoug",  url: "https://www.instagram.com/ratmodedoug?rpxt=bDBkM2hxNHhjZDlk&utm_source=qr", cta: "Follow",     accent: "#e1306c",
     blurb: "Behind the scenes, wins of the week and everything off-stream." },
 ];
 
